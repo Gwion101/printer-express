@@ -2,6 +2,8 @@
 
 Share standard printers via JSON API
 
+[![Build Status](https://secure.travis-ci.org/yevgenko/printer-express.png)](http://travis-ci.org/yevgenko/printer-express)
+
 ## Usage
 
 ### Standalone
