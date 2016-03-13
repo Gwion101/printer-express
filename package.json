@@ -1,0 +1,32 @@
+{
+  "name": "printer-express",
+  "version": "0.1.0",
+  "description": "Share standard printers via JSON API",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/unit.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yevgenko/printer-express.git"
+  },
+  "keywords": [
+    "printer",
+    "json",
+    "cloud"
+  ],
+  "author": "Yevhen V. <wik@bdhr.co>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yevgenko/printer-express/issues"
+  },
+  "homepage": "https://github.com/yevgenko/printer-express#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "printer": "^0.2.1"
+  },
+  "devDependencies": {
+    "supertest": "^1.2.0"
+  }
+}
