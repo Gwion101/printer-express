@@ -5,3 +5,4 @@ addons:
   apt:
     packages:
       - cups-config
+      - libcups2-dev
