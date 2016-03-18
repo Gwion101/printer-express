@@ -8,6 +8,10 @@ var fakePrinter = function (req, res, next) {
     printDirect: function (params) {
       var jobID = 1;
       params.success(jobID);
+    },
+    printFile: function (params) {
+      var jobID = 2;
+      params.success(jobID);
     }
   }
 
@@ -44,6 +48,16 @@ request(app)
   .send({ data: 'Hello, World!', type: 'RAW' })
   .expect('Content-Type', /json/)
   .expect(201, /"job_id":1/)
+  .end(function(err, res){
+    if (err) throw err;
+  });
+
+// prints file when URL is passed
+request(app)
+  .post('/cloudprint/jobs')
+  .send({ url: 'http://s3.example.com/print.pdf' })
+  .expect('Content-Type', /json/)
+  .expect(201, /"job_id":2/)
   .end(function(err, res){
     if (err) throw err;
   });

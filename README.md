@@ -66,3 +66,11 @@ or with jQuery:
       dataType: 'json',
       contentType: "application/json; charset=utf-8"
     });
+
+To print from file, i.e. PDF, simply replace `data` and `type` attributes with
+`url` pointing to the publicly accessible file, for example:
+
+    curl -v -X POST http://localhost:3000/jobs -H "Content-Type: application/json" -d '{"url":"http://example.com/print.pdf", "printer":"stkPrinter"}'
+
+We can also omit the `printer` attribute, in which case system default printer
+will be used.

@@ -2,7 +2,23 @@ var printer = require('printer'),
     express = require('express'),
     printerExpress = express(),
     bodyParser = require('body-parser'),
-    extend = require('util')._extend;
+    extend = require('util')._extend,
+    http = require('http'),
+    fs =  require('fs'),
+    tmp = require('tmp');
+
+function download(url, dest, cb) {
+  var file = fs.createWriteStream(dest);
+  var request = http.get(url, function(response) {
+    response.pipe(file);
+    file.on('finish', function() {
+      file.close(cb);  // close() is async, call cb after close completes.
+    });
+  }).on('error', function(err) { // Handle errors
+    fs.unlink(dest); // Delete the file async. (But we don't check the result)
+    if (cb) cb(err.message);
+  });
+};
 
 var printerMiddleware = function (req, res, next) {
   if (!req.printer) {
@@ -30,7 +46,14 @@ printerExpress.post('/jobs', function (req, res) {
     }
   }
 
-  req.printer.printDirect(extend(job, callbacks));
+  if (job.url) {
+    job.filename = tmp.tmpNameSync();
+    download(job.url, job.filename, function () {
+      req.printer.printFile(extend(job, callbacks));
+    });
+  } else {
+    req.printer.printDirect(extend(job, callbacks));
+  }
 });
 
 module.exports = printerExpress;
