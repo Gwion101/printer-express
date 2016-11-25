@@ -6,6 +6,7 @@ var printer = require('printer'),
     http = require('http'),
     fs =  require('fs'),
     tmp = require('tmp');
+    child_process = require('child_process');
 
 function download(url, dest, cb) {
   var file = fs.createWriteStream(dest);
@@ -49,7 +50,19 @@ printerExpress.post('/jobs', function (req, res) {
   if (job.url) {
     job.filename = tmp.tmpNameSync();
     download(job.url, job.filename, function () {
-      req.printer.printFile(extend(job, callbacks));
+      if (process.platform === 'win32') {
+        console.log('win32');
+        var command = 'C://SumatraPDF.exe -print-to ' + '"' + job.printer + '" ' + job.filename;
+        child_process.exec(command, function(error){
+          if (error) {
+            res.status(400).json({ error: error.message });
+          } else {
+            res.status(201).json({ result:"success" });
+          }
+        });
+      } else {
+        req.printer.printFile(extend(job, callbacks));
+      }
     });
   } else {
     req.printer.printDirect(extend(job, callbacks));
