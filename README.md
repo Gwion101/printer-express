@@ -81,3 +81,5 @@ Printing pdf files with node-printer is not supported on windows.
 Solution here is a bit of a hack, using SumatraPDF can make a child_process passing in the arguments to launch SumatraPDF silenty in the background to push the document to the printer.
 To setup, place Sumatra.pdf at the root of C:/ .
 The hope in future is to use foxit reader to process the print job.
+
+SumatraPDF can be downloaded here http://www.sumatrapdfreader.org/dl/SumatraPDF-3.1.2.zip
